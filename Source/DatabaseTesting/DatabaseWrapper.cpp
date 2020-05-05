@@ -1,6 +1,6 @@
-
 #include "DatabaseWrapper.h"
 #include "sqlite/sqlite3.h"
+
 
 // CONNECT TO DATABASE
 bool UDatabaseWrapper::Connect(FString DB_directory)
@@ -17,6 +17,7 @@ bool UDatabaseWrapper::Connect(FString DB_directory)
 		return false;
 	}
 }
+
 
 // DISCONNECT DATABASE
 void UDatabaseWrapper::Disconnect()
@@ -56,6 +57,7 @@ bool UDatabaseWrapper::CreateTable(FString _TableName, TArray<int32> Answers)
 	return true;
 }
 
+
 // INSERT RECORD (answer array)
 bool UDatabaseWrapper::InsertData(FString _TableName, TArray<int32> answers)
 {
@@ -89,6 +91,7 @@ bool UDatabaseWrapper::InsertData(FString _TableName, TArray<int32> answers)
 	return true;
 }
 
+
 bool UDatabaseWrapper::UpdateData(FString _TableName, TArray<int32> Answers, int32 column)
 {
 
@@ -110,11 +113,9 @@ bool UDatabaseWrapper::UpdateData(FString _TableName, TArray<int32> Answers, int
 }
 
 
-
 // QUERY DATA FROM TABLE
 bool UDatabaseWrapper::Query(FString sqlClause, FTietomaaAnswers& Answers)
 {
-	//FString sql = sqlClause;
 
 	struct FTietomaaAnswers stats;
 
@@ -128,7 +129,6 @@ bool UDatabaseWrapper::Query(FString sqlClause, FTietomaaAnswers& Answers)
 
 bool UDatabaseWrapper::QueryAllSimilarAnswers(FString _TableName, int32 col, TArray<int32> _answers, FTietomaaAnswers& Answers)
 {
-
 	// construct sql clause
 	FString sql = "SELECT * FROM ";
 	sql.Append(_TableName);
@@ -150,12 +150,9 @@ bool UDatabaseWrapper::QueryAllSimilarAnswers(FString _TableName, int32 col, TAr
 	sqlite3_exec(DB, TCHAR_TO_ANSI(*sql), ResultsCallback, &stats, NULL);
 
 	Answers = stats;
-	//EntryCount = stats.resultCount;
 
 	return false;
 }
-
-
 
 
 int32 UDatabaseWrapper::GetEntryCount()
